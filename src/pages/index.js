@@ -18,13 +18,16 @@ export default function Home() {
   async function handleOnGenerate(e) {
     e.preventDefault();
 
+    const fields = Array.from(e.currentTarget.elements);
+    const prompt = fields.find(el => el.name === 'prompt').value;
+
     setIsLoading(true);
     setImage(undefined);
 
     const { image } = await fetch('/api/image', {
       method: 'POST',
       body: JSON.stringify({
-        
+        prompt
       })
     }).then(res => res.json());
     
@@ -41,15 +44,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Section>
-        <Container className={styles.cardContainer} size="content">
-          <Form className={styles.form}>
+        <Container size="content">
+          <Form className={styles.form} onSubmit={handleOnGenerate}>
             {image && (<img src={image} alt="Generated Image" />) }
             <h2>Generate an Image</h2>
             <FormRow>
               <FormInput type="text" name="prompt" />
             </FormRow>
             <FormRow>
-              <Button onClick={handleOnGenerate} disabled={isLoading}>Generate</Button>
+              <Button disabled={isLoading}>Generate</Button>
             </FormRow>
           </Form>
         </Container>
