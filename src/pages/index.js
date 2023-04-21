@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head'
+import { createParser } from 'eventsource-parser';
 
 import Layout from '@/components/Layout';
 import Section from '@/components/Section';
@@ -32,14 +33,44 @@ export default function Home() {
     setIsLoading(true);
     setText(undefined);
 
-    const { data } = await fetch('/api/chat', {
+    const response = await fetch('/api/chat-stream', {
       method: 'POST',
       body: JSON.stringify({
         prompt
-      })
-    }).then(r => r.json());
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-    setText(data);
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+
+    function onParse(event) {
+      if (event.type === 'event') {
+        try {
+          const data = JSON.parse(event.data);
+          data.choices
+            .filter(({ delta }) => !!delta.content)
+            .forEach(({ delta }) => {
+              setText(prev => {
+                return `${prev || ''}${delta.content}`;
+              })
+            });
+        } catch(e) {
+          console.log(e)
+        }
+      }
+    }
+
+    const parser = createParser(onParse)
+
+    while (true) {
+      const { value, done } = await reader.read();
+      const dataString = decoder.decode(value);
+      if ( done || dataString.includes('[DONE]') ) break;
+      parser.feed(dataString);
+    }
 
     setIsLoading(false);
   }
