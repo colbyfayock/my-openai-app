@@ -39,6 +39,25 @@ export default function Home() {
     }).then(r => r.json());
 
     setPost(data);
+
+    const { image } = await fetch('/api/image', {
+      method: 'POST',
+      body: JSON.stringify({
+        prompt: `
+          ${data.title}.
+          stylized as a watercolor painting.
+          the primary color should be green.
+        `
+      })
+    }).then(r => r.json());
+
+    setPost(prev => {
+      return {
+        ...prev,
+        image
+      }
+    })
+
     setIsLoading(false);
   }
 
@@ -64,6 +83,9 @@ export default function Home() {
           </Form>
           {post && (
             <div>
+              {post.image && (
+                <img src={post.image} alt="" />
+              )}
               <h1>{ post.title }</h1>
               <div dangerouslySetInnerHTML={{
                 __html: post.content
