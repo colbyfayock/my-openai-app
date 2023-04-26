@@ -38,7 +38,7 @@ export default function Home() {
       })
     }).then(r => r.json());
 
-    setPost(data.content);
+    setPost(data);
     setIsLoading(false);
   }
 
@@ -63,7 +63,12 @@ export default function Home() {
             </FormRow>
           </Form>
           {post && (
-            <div>{ post }</div>
+            <div>
+              <h1>{ post.title }</h1>
+              <div dangerouslySetInnerHTML={{
+                __html: post.content
+              }} />
+            </div>
           )}
         </Container>
       </Section>

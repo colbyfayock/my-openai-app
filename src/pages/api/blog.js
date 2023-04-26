@@ -6,7 +6,8 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const shape = {
-  content: 'Blog content'
+  title: 'Technology title',
+  content: '<p>A blog post about current technology</p>'
 }
 
 export default async function handler(req, res) {
@@ -16,8 +17,23 @@ export default async function handler(req, res) {
     model: 'gpt-3.5-turbo',
     messages: [
       {
+        role: 'system',
+        content: `
+          You are an assistant that creates new blog posts on a given topic.
+          You should provide a title and HTML content in JSON format.
+        `
+      },
+      {
         role: 'user',
-        content: `Create a blog post with the following topic: ${prompt}. Format the response as a JSON object with a shape of ${JSON.stringify(shape)}.`
+        content: 'technology'
+      },
+      {
+        role: 'assistant',
+        content: JSON.stringify(shape)
+      },
+      {
+        role: 'user',
+        content: `Create a blog post with the following topic: ${prompt}.`
       }
     ]
   });
