@@ -17,47 +17,44 @@ function getFieldFromFormByName({ name, form } = {}) {
 }
 
 export default function Home() {
-  const [post, setPost] = useState();
+  const [audioSrc, setAudioSrc] = useState();
+  const [uploadData, setUploadData] = useState();
+  const [transcription, setTranscription] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  async function handleOnGenerateText(e) {
+  function handleOnChange(changeEvent) {
+    const reader = new FileReader();
+
+    reader.onload = function(onLoadEvent) {
+      setAudioSrc(onLoadEvent.target.result);
+      setUploadData(undefined);
+    }
+
+    reader.readAsDataURL(changeEvent.target.files[0]);
+  }
+
+  async function handleOnTranscribe(e) {
     e.preventDefault();
 
-    const { value: prompt } = getFieldFromFormByName({
-      name: 'prompt-post',
-      form: e.currentTarget
-    });
+    const form = e.currentTarget;
+    const fileInput = Array.from(form.elements).find(({ name }) => name === 'file');
 
     setIsLoading(true);
-    setPost(undefined);
+    setTranscription(undefined);
 
-    const { data } = await fetch('/api/blog', {
+    const formData = new FormData();
+
+    for ( const file of fileInput.files ) {
+      formData.append('file', file);
+    }
+
+    const { data } = await fetch('/api/transcribe', {
       method: 'POST',
-      body: JSON.stringify({
-        prompt
-      })
+      body: formData,
     }).then(r => r.json());
+console.log('data', data);
 
-    setPost(data);
-
-    const { image } = await fetch('/api/image', {
-      method: 'POST',
-      body: JSON.stringify({
-        prompt: `
-          ${data.title}.
-          stylized as a watercolor painting.
-          the primary color should be green.
-        `
-      })
-    }).then(r => r.json());
-
-    setPost(prev => {
-      return {
-        ...prev,
-        image
-      }
-    })
-
+    // setTranscription(data);
     setIsLoading(false);
   }
 
@@ -71,27 +68,16 @@ export default function Home() {
       </Head>
       <Section>
         <Container size="content">
-          <Form className={styles.form} onSubmit={handleOnGenerateText}>
-            <h2>Generate Post</h2>
+          <Form className={styles.form} onSubmit={handleOnTranscribe} onChange={handleOnChange}>
+            <h2>Transcribe</h2>
             <FormRow>
-              <label>Enter Your Topic:</label>
-              <FormInput type="text" name="prompt-post" />
+              <label>Select Your Audio File:</label>
+              <input type="file" name="file" />
             </FormRow>
             <FormRow>
-              <Button disabled={isLoading}>Generate</Button>
+              <Button disabled={isLoading}>Upload</Button>
             </FormRow>
           </Form>
-          {post && (
-            <div>
-              {post.image && (
-                <img src={post.image} alt="" />
-              )}
-              <h1>{ post.title }</h1>
-              <div dangerouslySetInnerHTML={{
-                __html: post.content
-              }} />
-            </div>
-          )}
         </Container>
       </Section>
     </Layout>
