@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Xander Prime",
+    "biography": "Xander Prime is a cyborg who was once human, but sustained severe injuries following a crash landing on an unknown planet. He was forced to undergo several surgeries to stay alive, which included the implantation of various cybernetic parts. Xander is now a mercenary that works for the highest bidder and holds a dark secret about his past prior to the crash.",
+    "species": "Cyborg",
+    "homeworld": {
+      "name": "Unknown",
+      "description": "A planet that is yet to be discovered by the galactic community."
+    },
+    "attributes": [
+      "Enhanced strength",
+      "Regenerative healing",
+      "Expert hand-to-hand combatant"
+    ]
+  },
+  {
+    "name": "Aria Sunspark",
+    "biography": "Aria Sunspark is a highly skilled engineer that specializes in creating advanced weaponry for the Intergalactic Alliance. Her inventions have won her countless awards and accolades, but Aria is plagued by a recent tragedy that has left her questioning the ethics of her work.",
+    "species": "Galvan",
+    "homeworld": {
+      "name": "Galvan Prime",
+      "description": "A peaceful planet that is home to a highly intelligent and technologically advanced species."
+    },
+    "attributes": [
+      "Genius-level intellect",
+      "Expert mechanic",
+      "Skeptical of authority"
+    ]
+  },
+  {
+    "name": "Thaxxos the Magnificent",
+    "biography": "Thaxxos is a famous magician that travels the galaxy performing for crowds of adoring fans. Despite his ostentatious persona, Thaxxos harbors a tragic past marked by betrayal and deceit.",
+    "species": "Necrolian",
+    "homeworld": {
+      "name": "Necrolia",
+      "description": "A planet of darkness and shadows, home to a mysterious and secretive species."
+    },
+    "attributes": [
+      "Master of illusions",
+      "Charismatic performer",
+      "Haunted by his past"
+    ]
+  },
+  {
+    "name": "Draxx Ironclad",
+    "biography": "Draxx is a battle-hardened warrior that has served in countless intergalactic conflicts. He is fiercely loyal to his comrades and will stop at nothing to defend his homeworld from any and all threats.",
+    "species": "Vorn",
+    "homeworld": {
+      "name": "Vorn Prime",
+      "description": "A harsh and unforgiving planet that has bred a resilient and fierce warrior species."
+    },
+    "attributes": [
+      "Expert tactician",
+      "Skilled in various weaponry",
+      "Highly disciplined"
+    ]
+  },
+  {
+    "name": "Lyranthia Winterhaven",
+    "biography": "Lyranthia is an enigmatic figure that has been immortalized in countless myths and legends. Some claim she is an ancient deity that has taken mortal form, while others believe she is a powerful sorceress that has achieved immortality through dark magic.",
+    "species": "Unknown",
+    "homeworld": {
+      "name": "Unknown",
+      "description": "A planet that is shrouded in mystery and has yet to be identified by the galactic community."
+    },
+    "attributes": [
+      "Immortal",
+      "Mastery of magic",
+      "Is elusive and mysterious"
+    ]
+  }
+]
