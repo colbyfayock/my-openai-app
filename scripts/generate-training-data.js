@@ -20,8 +20,8 @@ const characters = require('../src/data/characters.json');
     for ( const character of characters ) {
       const prompts = await generatePrompts(character);
       allPrompts.push(prompts);
-      await fs.writeFile('./src/data/prompts.jsonl', allPrompts.join('\n'))
     }
+    await fs.writeFile('./src/data/prompts.jsonl', allPrompts.join('\n'))
   } catch(e) {
     console.log('e', e.message);
   }
